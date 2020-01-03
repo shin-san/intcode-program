@@ -85,6 +85,11 @@ public class IntcodeProgram {
                 opCode = intCodeCommands.get(i);
             }
 
+            if (opCode == 99) {
+                LOGGER.info("Opcode command 99 has been detected. Terminating program...");
+                return;
+            }
+
             firstParameter = parameterList.get(0);
             secondParameter = parameterList.get(1);
             thirdParameter = parameterList.get(2);
@@ -108,10 +113,6 @@ public class IntcodeProgram {
             }
 
             switch (opCode) {
-                case 99:
-                    LOGGER.info("Opcode command 99 has been detected. Terminating program...");
-                    return;
-
                 case 1:
                     totalValue = firstValue + secondValue;
                     LOGGER.debug("Opcode 1: Replacing value in position {} from {} to {}", (i + 3), thirdValue, totalValue);
@@ -128,12 +129,12 @@ public class IntcodeProgram {
 
                 case 3:
                     intCodeCommands.put(intCodeCommands.get(i+1),input);
-                    LOGGER.debug("Opcode 3: Replacing position {} from {} to {}", i+1, intCodeCommands.get(i+1), input);
+                    LOGGER.debug("Opcode 3: Replacing position {} from {} to {}", (i+1), intCodeCommands.get(i+1), input);
                     instructionPointer = 2;
                     break;
 
                 case 4:
-                    LOGGER.info("Opcode 4: Value in position {}: {}", i + 1, firstValue);
+                    LOGGER.info("Opcode 4: Value in position {}: {}", (i + 1), firstValue);
                     instructionPointer = 2;
                     break;
             }
